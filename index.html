@@ -71,6 +71,102 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-bat-set" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/chis_zone/2023/02/07/bat-set/" class="article-date">
+  <time class="dt-published" datetime="2023-02-07T22:03:55.000Z" itemprop="datePublished">2023-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/chis_zone/2023/02/07/bat-set/">Bat/cmd 變數</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>set var=1</code><br>批次裡面也分成全域環境變數與區域變數，<br>如果直接在 cmd 執行，宣告的變數是全域變數，需要另外設定才能在範圍內宣告區域變數<br>如果是 bat 執行，則是在打開 bat 期間宣告的變數都是區域變數</p>
+<h3 id="怎麼宣告區域變數"><a href="#怎麼宣告區域變數" class="headerlink" title="怎麼宣告區域變數"></a>怎麼宣告區域變數</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setlocal</span><br><span class="line">endlocal</span><br></pre></td></tr></table></figure>
+<p>執行 setlocal 後，範圍內宣告的變數都是區域變數，直到執行 endlocal 才結束</p>
+<p>備註：還有 setlocal EnableDelayedExpansion (等等再提)</p>
+<h3 id="相關用法"><a href="#相關用法" class="headerlink" title="相關用法"></a>相關用法</h3><ul>
+<li>運算後宣告<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set /a num=1+1</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="變數延遲展開"><a href="#變數延遲展開" class="headerlink" title="變數延遲展開"></a>變數延遲展開</h3><p>試著執行看看下面語法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set num=0</span><br><span class="line">for %%a in (1 1 1 1 1) do (</span><br><span class="line">   set /a num+=%%a</span><br><span class="line">   echo %num%</span><br><span class="line">)</span><br><span class="line">echo %num%</span><br></pre></td></tr></table></figure>
+<p>會發現 num 還是 0，而不是 5<br>是因為 num 在 bat 檔被解析時，num 會提前被展開 + 被 echo 出來，<br>所以當要正確印出 num，需要延遲變數展開：<br><code>setlocal EnableDelayedExpansion</code><br>並且搭配 !num! 印出對的結果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">setlocal EnableDelayedExpansion</span><br><span class="line">for %%a in (1 1 1 1 1) do (</span><br><span class="line">   set /a num+=%%a</span><br><span class="line">   echo !num!</span><br><span class="line">)</span><br><span class="line">endlocal</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vickyh7518.github.io/chis_zone/2023/02/07/bat-set/" data-id="clducet7s0001b7os2ih0h4zj" data-title="Bat/cmd 變數" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/chis_zone/tags/Bat/" rel="tag">Bat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/chis_zone/tags/cmd/" rel="tag">cmd</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-php-session" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/chis_zone/2022/12/01/php-session/" class="article-date">
+  <time class="dt-published" datetime="2022-12-01T23:01:55.000Z" itemprop="datePublished">2022-12-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/chis_zone/2022/12/01/php-session/">Php session 使用方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="起手式-session-start"><a href="#起手式-session-start" class="headerlink" title="起手式 session_start()"></a>起手式 <code>session_start()</code></h2><p>要使用 session ，就需要在一開始呼叫 <code>session_start()</code>，啟動後，就可以使用 <code>$_SESSION</code> 去存取資料</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">session_start();</span><br><span class="line">echo $_SESSION[&#x27;userid&#x27;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="session-儲存位置"><a href="#session-儲存位置" class="headerlink" title="session 儲存位置"></a>session 儲存位置</h2><p>php.ini 預設的保存方式是檔案儲存(session.save_handler &#x3D; files)，會放在 <code>session.save_path</code> 指定的路徑，</p>
+<p>資料來源：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10207241">https://ithelp.ithome.com.tw/articles/10207241</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://vickyh7518.github.io/chis_zone/2022/12/01/php-session/" data-id="clducet7x0005b7osg55v5pto" data-title="Php session 使用方法" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-bat-comment" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/chis_zone/2022/11/29/bat-comment/" class="article-date">
@@ -103,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://vickyh7518.github.io/chis_zone/2022/11/29/bat-comment/" data-id="clb2c0oi20000b7n3ajwjc9i0" data-title="Bat/cmd 遠端連線" class="article-share-link">Share</a>
+      <a data-url="https://vickyh7518.github.io/chis_zone/2022/11/29/bat-comment/" data-id="clducet7o0000b7os8t233kp8" data-title="Bat/cmd 遠端連線" class="article-share-link">Share</a>
       
       
       
@@ -154,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://vickyh7518.github.io/chis_zone/2022/11/27/php-conn/" data-id="clb2c0oia0003b7n39ogm2ab0" data-title="Php 連接資料庫方式" class="article-share-link">Share</a>
+      <a data-url="https://vickyh7518.github.io/chis_zone/2022/11/27/php-conn/" data-id="clducet7w0004b7osctbv3v05" data-title="Php 連接資料庫方式" class="article-share-link">Share</a>
       
       
       
@@ -217,7 +313,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://vickyh7518.github.io/chis_zone/2022/11/23/hexo-notes/" data-id="clb2c0oi70001b7n351n5adjm" data-title="Hexo 筆記" class="article-share-link">Share</a>
+      <a data-url="https://vickyh7518.github.io/chis_zone/2022/11/23/hexo-notes/" data-id="clducet7v0003b7os44x87h5b" data-title="Hexo 筆記" class="article-share-link">Share</a>
       
       
       
@@ -254,7 +350,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">標籤雲</h3>
     <div class="widget tagcloud">
-      <a href="/chis_zone/tags/Bat/" style="font-size: 10px;">Bat</a> <a href="/chis_zone/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/chis_zone/tags/cmd/" style="font-size: 10px;">cmd</a> <a href="/chis_zone/tags/php/" style="font-size: 10px;">php</a>
+      <a href="/chis_zone/tags/Bat/" style="font-size: 20px;">Bat</a> <a href="/chis_zone/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/chis_zone/tags/cmd/" style="font-size: 20px;">cmd</a> <a href="/chis_zone/tags/php/" style="font-size: 10px;">php</a>
     </div>
   </div>
 
@@ -263,7 +359,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">彙整</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/chis_zone/archives/2022/11/">十一月 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/chis_zone/archives/2023/02/">二月 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/chis_zone/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/chis_zone/archives/2022/11/">十一月 2022</a></li></ul>
     </div>
   </div>
 
@@ -274,6 +370,14 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/chis_zone/2023/02/07/bat-set/">Bat/cmd 變數</a>
+          </li>
+        
+          <li>
+            <a href="/chis_zone/2022/12/01/php-session/">Php session 使用方法</a>
+          </li>
         
           <li>
             <a href="/chis_zone/2022/11/29/bat-comment/">Bat/cmd 遠端連線</a>
@@ -300,7 +404,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 Chi<br>
+      &copy; 2023 Chi<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
